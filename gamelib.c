@@ -18,7 +18,7 @@ static void set_doppelganger();
 static void set_point();
 static void menu_impostazione_mappa();
 static void ins_stanza(bool nuova_mappa);
-
+static void del_stanza();
 
 static int num_Stanze = 0; //variabile che contiene il numero di stanze
 static struct Stanza* pFirst = NULL;//puntatore in cima alla lista Stanza
@@ -47,9 +47,9 @@ void imposta_gioco(){
     
     do {
     printf("\nIl menu dell'impostazione:\n");
-    printf("\t0. Inizializzazione stanza\n");
-    printf("\t1. Vai all'impostazione della mappa\n");
-    printf("\t2. Vai all'impostazione della mappa\n");
+    printf("\t0. Esci al menu' generale\n");
+    printf("\t1. Inizializza stanze\n");
+    printf("\t2. Cancella stanza\n");
     printf("\t3. Vai all'impostazione del tempo di pausa del gioco\n");
 
     printf(">> ");
@@ -57,12 +57,17 @@ void imposta_gioco(){
     svuotaBuffer();
 
     if(scelta == 1) {
+        system ("clear");
         ins_stanza(true);
     } else if(scelta == 2) {
-        printf("menu_impostazione_giocatori()");
+        system ("clear");
+        del_stanza();
+        
     } else if(scelta == 3) {
+        system ("clear");
         printf("menu_impostazione_tempo_pausa()");
     } else if(scelta > 3) {
+        system ("clear");
         printf("Il comando non riconosciuto!\n");
     }
     }
@@ -157,13 +162,34 @@ static void ins_stanza(bool nuova_mappa){
     }
     
     for (int i = 0; i < 15; i++){
-       new_Stanza -> Tipo_stanza = rand() % 10;
-       new_Stanza -> Tipo_trabocchetto = rand() % 10;
+        new_Stanza -> Tipo_stanza = rand() % 10;
+        new_Stanza -> Tipo_trabocchetto = rand() % 5;
+        new_Stanza -> Tipo_tesoro = rand() %6 ;
+
+        pLast = new_Stanza;    
+        if(i <14){
+            new_Stanza = (Stanza*) (malloc(sizeof(new_Stanza)));
+            pLast -> destra = new_Stanza;
+            new_Stanza -> sinistra = pLast;
+            new_Stanza -> destra = NULL;
+        }
+    }
+
+    if(nuova_mappa){
+        num_Stanze = 15;
+        printf("Mappa con 15 stanze create con successo!\n");
+    } else{
+        num_Stanze += 15;
+        printf("Aggiunto 15 stanze alla mappa");
+    }
+}
+
+static void del_stanza(){
+    if(num_giocatori == 0){
+        printf("");
     }
 
 }
-
-
 
 static void stats_players(){
     int i;

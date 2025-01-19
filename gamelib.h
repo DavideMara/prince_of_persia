@@ -28,7 +28,7 @@ typedef struct Stanza {
     struct Stanza* sinistra;
     struct Stanza* sotto;
     struct Stanza* sopra;
-    enum Tipo_stanza;
-    enum Tipo_trabocchetto;
-    enum Tipo_tesoro;v
+    enum Tipo_stanza Tipo_stanza;
+    enum Tipo_trabocchetto Tipo_trabocchetto;
+    enum Tipo_tesoro Tipo_tesoro;
 } Stanza;
