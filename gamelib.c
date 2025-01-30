@@ -28,9 +28,6 @@ static struct Stanza* pLast = NULL;//puntatore in fondo alla lista Stanza
 bool impostato = false;
 Giocatore* players[3];
 unsigned short num_giocatori;
-
-
-
 //Giocatore* giocatori[3];
 
 void imposta_gioco(){
