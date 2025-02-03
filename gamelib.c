@@ -6,48 +6,54 @@
 #include <time.h>
 #include <unistd.h>
 
-int c; //variabile controllo input
-void svuotaBuffer();
-static void stats_players();
-
-//funzioni per imposta_gioco()
+//funzioni gestione players
 static void creazione_giocatori();
 static void selezione_classe();
 static void set_principe();
 static void set_doppelganger();
 static void set_point();
+
+// variabili gestione player
+bool impostato = false;
+Giocatore* players[3];
+unsigned short num_giocatori;
+
+//funzioni gestione mappa
 static void menu_impostazione_mappa();
 static void ins_stanza(bool nuova_mappa);
 static void del_stanza();
 
-static int num_Stanze = 0; //variabile che contiene il numero di stanze
-static struct Stanza* pFirst = NULL;//puntatore in cima alla lista Stanza
-static struct Stanza* pLast = NULL;//puntatore in fondo alla lista Stanza
+// variabili per imposta_map()
+Stanza * pFirst = NULL;
+Stanza * pLast = NULL;
+int num_Stanza = 0;
+bool mappa_chiusa = false;
 
+// controllo input
+int c; 
+void svuotaBuffer();
+static void stats_players();
 
-bool impostato = false;
-Giocatore* players[3];
-unsigned short num_giocatori;
-//Giocatore* giocatori[3];
 
 void imposta_gioco(){
     unsigned int scelta = 10;
     if (impostato == false){
 
-        printf("Essendo la prima partita creare i giocatori\n");
+        printf("Essendo la prima partita impostiamo i giocatori\n");
         creazione_giocatori();
         set_point(); 
         printf("\e[1;33mI giocatori sono stati configurati\n");    
         stats_players(); 
+        impostato == true;
     }
     
     
     do {
     printf("\nIl menu dell'impostazione:\n");
     printf("\t0. Esci al menu' generale\n");
-    printf("\t1. Inizializza stanze\n");
-    printf("\t2. Cancella stanza\n");
-    printf("\t3. Vai all'impostazione del tempo di pausa del gioco\n");
+    printf("\t1. Vai alle impostazioni mappa\n");
+    printf("\t2. \n");
+    printf("\t3. Vai alle impostazioni del tempo di pausa del gioco\n");
 
     printf(">> ");
     scanf("%hu", &scelta);
@@ -55,10 +61,8 @@ void imposta_gioco(){
 
     if(scelta == 1) {
         system ("clear");
-        ins_stanza(true);
     } else if(scelta == 2) {
         system ("clear");
-        del_stanza();
         
     } else if(scelta == 3) {
         system ("clear");
@@ -105,7 +109,6 @@ static void creazione_giocatori(){
     } 
 }
 
-
 static void selezione_classe(){
     int unsigned a=0 , scelta;
 
@@ -123,9 +126,6 @@ static void selezione_classe(){
     }
 }
 
-
-
-
 static void set_principe(int unsigned scelta){
     players[scelta - 1] -> tipo_giocatore = principe;
 }
@@ -139,53 +139,6 @@ static void set_point(){
         players[i]->p_vita_max = 3;
         players[i]->p_vita = 3;
     }
-}
-
-static void ins_stanza(bool nuova_mappa){
-    int i;
-    time_t t;
-
-    srand((unsigned)time(&t));
-    Stanza* new_Stanza = (Stanza*) (malloc(sizeof(Stanza)));
-    new_Stanza -> destra = NULL;
-    new_Stanza -> sinistra = NULL;
-    new_Stanza -> sopra = NULL;
-    new_Stanza -> sotto = NULL;
-
-    if(nuova_mappa){
-        pFirst = new_Stanza;
-    } else {
-        pLast -> destra = new_Stanza;
-    }
-    
-    for (int i = 0; i < 15; i++){
-        new_Stanza -> Tipo_stanza = rand() % 10;
-        new_Stanza -> Tipo_trabocchetto = rand() % 5;
-        new_Stanza -> Tipo_tesoro = rand() %6 ;
-
-        pLast = new_Stanza;    
-        if(i <14){
-            new_Stanza = (Stanza*) (malloc(sizeof(new_Stanza)));
-            pLast -> destra = new_Stanza;
-            new_Stanza -> sinistra = pLast;
-            new_Stanza -> destra = NULL;
-        }
-    }
-
-    if(nuova_mappa){
-        num_Stanze = 15;
-        printf("Mappa con 15 stanze create con successo!\n");
-    } else{
-        num_Stanze += 15;
-        printf("Aggiunto 15 stanze alla mappa");
-    }
-}
-
-static void del_stanza(){
-    if(num_giocatori == 0){
-        printf("");
-    }
-
 }
 
 static void stats_players(){

@@ -7,8 +7,8 @@ void termina_gioco();
 
 typedef enum Tipo_giocatore{principe, doppelganger} Tipo_giocatore;
 typedef enum Tipo_stanza{corridoio, scala, sala_banchetto, magazzino, posto_guardia, prigione, armeria, moschea, torre, bagni};
-typedef enum Tipo_trabocchetto{nessuno, tegola, lame, caduta, burrone};
-typedef enum Tipo_tesoro{nessun_tesoro, veleno_verde, blu_guarigione, rosso_aumenta, spada_tagliente, scudo};
+typedef enum Tipo_trabocchetto{nessuno = 0, tegola, lame, caduta, burrone};
+typedef enum Tipo_tesoro{nessun_tesoro = 0, veleno_verde, blu_guarigione, rosso_aumenta, spada_tagliente, scudo};
 typedef enum bool {true = 1, false = 0} bool;
 
 
