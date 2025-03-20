@@ -91,7 +91,7 @@ static void creazione_giocatori(){
         printf("Ciao Giocatore %d! Qual'è il tuo nome? (Massimo 10 caratteri): ", i+1); //Chiedo di inserire il nome di giocatore
         do {
             fgets(players[i] -> nome_giocatore, 10, stdin);
-            players[i] -> nome_giocatore[strcspn(players[i] -> nome_giocatore, "\n")] = 0;
+            players[i]  -> nome_giocatore[strcspn(players[i] -> nome_giocatore, "\n")] = 0;
             svuotaBuffer();
         }while (strcmp(players[i] -> nome_giocatore, "")== 0);
         printf("Il giocatore %d impostato con successo!\n", i+1);
@@ -344,3 +344,14 @@ void svuotaBuffer(){
 // Piu altre funzioni di supporto.
 // Le funzioni richiamabili in main.c non devono essere static.
 // Le altre devono essere static (non visibili all'esterno).
+
+
+/**
+ * @brief Restituisce il doppio di un numero intero.
+ * @param x Il numero da raddoppiare.
+ * @return Il doppio del numero passato.
+ */
+int doppio(int x)
+{
+    return x << 1;
+}
